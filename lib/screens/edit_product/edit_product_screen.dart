@@ -8,8 +8,8 @@ import 'images_form.dart';
 
 class EditProductScreen extends StatelessWidget {
   EditProductScreen(ProductModel model, {Key? key})
-      : productModel = model.uid != '' ? model.clone() : model,
-        editing = model.uid != '',
+      : productModel = model.uid.isNotEmpty ? model.clone() : model,
+        editing = model.uid.isNotEmpty,
         super(key: key);
 
   final ProductModel productModel;

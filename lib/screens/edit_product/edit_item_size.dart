@@ -1,4 +1,4 @@
-import 'package:app_loja_virtual/components/custom_iton_buttom.dart';
+import 'package:app_loja_virtual/components/custom_icon_buttom.dart';
 import 'package:app_loja_virtual/models/item_size_model.dart';
 import 'package:flutter/material.dart';
 
@@ -58,7 +58,7 @@ class EditItemSize extends StatelessWidget {
               return null;
             },
             onChanged: (stock){
-              if(stock == ''){
+              if(stock.isEmpty){
                 stock = '0';
               }
               itemSizeModel.stock = int.tryParse(stock)!;
@@ -83,7 +83,7 @@ class EditItemSize extends StatelessWidget {
               return null;
             },
             onChanged: (price){
-              if(price == ''){
+              if(price.isEmpty){
                 price = '0.00';
               }
               itemSizeModel.price = double.tryParse(price)!;

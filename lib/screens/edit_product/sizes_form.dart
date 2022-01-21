@@ -1,4 +1,4 @@
-import 'package:app_loja_virtual/components/custom_iton_buttom.dart';
+import 'package:app_loja_virtual/components/custom_icon_buttom.dart';
 import 'package:app_loja_virtual/models/item_size_model.dart';
 import 'package:app_loja_virtual/models/product_model.dart';
 import 'package:flutter/material.dart';

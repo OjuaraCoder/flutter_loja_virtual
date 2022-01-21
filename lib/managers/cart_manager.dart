@@ -68,7 +68,7 @@ class CartManager extends ChangeNotifier {
   }
 
   void _updateCartProduct(CartModel cartModel){
-    if(cartModel.uid != ''){
+    if(cartModel.uid.isNotEmpty){
       userModel.cartReference.doc(cartModel.uid).update(cartModel.toCartItemMap());
     }
   }

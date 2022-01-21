@@ -63,9 +63,11 @@ class CartModel extends ChangeNotifier{
   // }
 
   factory CartModel.fromDocument(DocumentSnapshot document) {
+    var productModel = ProductModel.cleanProduct();
+    productModel.uid = document['pid'];
     return CartModel (
       productID: document['pid'],
-      productModel: ProductManager.findProductModel(document['pid']),
+      productModel: productModel,
       size: document['size'] as String,
       quantity: document['quantity'] as int,
       uid: document.id,
@@ -73,7 +75,7 @@ class CartModel extends ChangeNotifier{
   }
 
   ItemSizeModel get itemSize{
-    if(productModel.uid == '') {
+    if(productModel.uid.isEmpty) {
       return ItemSizeModel(stock: 0, name: '', price: 0.00);
     }
       return productModel.findSize(size);

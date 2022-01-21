@@ -1,4 +1,5 @@
 
+import 'package:app_loja_virtual/helpers/logger.dart';
 import 'package:app_loja_virtual/models/product_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -7,7 +8,7 @@ class ProductManager extends ChangeNotifier{
 
   FirebaseFirestore firestore = FirebaseFirestore.instance;
 
-  static List<ProductModel> allProducts = [];
+  List<ProductModel> allProducts = [];
 
   String _search = '';
 
@@ -39,18 +40,21 @@ class ProductManager extends ChangeNotifier{
   }
 
   ProductModel findProductByID(String productID) {
-    return allProducts.firstWhere((p) => p.uid == productID);
+    return allProducts.firstWhere((p) => p.uid == productID, orElse: () => ProductModel.cleanProduct());
   }
 
-  static ProductModel findProductModel(String productID) {
+  ProductModel findProductModel(String productID) {
     try{
-      return allProducts.firstWhere((p) => p.uid == productID);
+      var model = findProductByID(productID);
+      if(model.uid.isEmpty){
+        FirebaseFirestore.instance.doc('products/$productID').get().then((doc){
+          model =  ProductModel.fromDocument(doc);
+        });
+      }
+      return model;
     }catch(e){
-      var prod = ProductModel(uid: '', name: 'dummy', description: '', images: [], sizes: []);
-      FirebaseFirestore.instance.doc('products/$productID').get().then((doc){
-        prod =  ProductModel.fromDocument(doc);
-      });
-      return prod;
+      logger.e(e.toString());
+      return ProductModel.cleanProduct();
     }
   }
 

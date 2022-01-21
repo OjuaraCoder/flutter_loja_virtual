@@ -112,7 +112,7 @@ class ProductModel  extends ChangeNotifier{
       'sizes': exportSizeList(),
     };
 
-    if(uid == ''){
+    if(uid.isEmpty){
       final doc = await firestore.collection('products').add(data);
       uid = doc.id;
     }else{
@@ -144,7 +144,6 @@ class ProductModel  extends ChangeNotifier{
     }
 
     await firestoreRef.update({'images': updateImages});
-
     images = updateImages;
     loading = false;
   }

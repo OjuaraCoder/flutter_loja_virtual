@@ -7,6 +7,7 @@ import 'package:app_loja_virtual/screens/cart/cart_screen.dart';
 import 'package:app_loja_virtual/screens/edit_product/edit_product_screen.dart';
 import 'package:app_loja_virtual/screens/login/loginscreen.dart';
 import 'package:app_loja_virtual/screens/productdetail/product_screen.dart';
+import 'package:app_loja_virtual/screens/select_product/selecte_product_screen.dart';
 import 'package:app_loja_virtual/screens/signup/signup_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -81,6 +82,8 @@ class MyApp extends StatelessWidget {
               return MaterialPageRoute(builder: (_) => ProductScreen(settings.arguments as ProductModel));
             case '/cart':
               return MaterialPageRoute(builder: (_) => const CartScreen());
+            case '/select_product':
+              return MaterialPageRoute(builder: (_) => const SelectProductScreen());
             case '/edit_product':
               return MaterialPageRoute(builder: (_) => EditProductScreen(settings.arguments as ProductModel));
             default:
