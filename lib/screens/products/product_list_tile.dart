@@ -21,9 +21,12 @@ class ProductListTile extends StatelessWidget {
           padding: const EdgeInsets.all(8),
           child: Row(
             children: [
-              AspectRatio(
-                aspectRatio: 1,
-                child: Image.network(productModel.images.first),
+              ClipRRect(
+                borderRadius: BorderRadius.circular(8.0),
+                child: AspectRatio(
+                  aspectRatio: 1,
+                  child: Image.network(productModel.images.first),
+                ),
               ),
               const SizedBox(width: 16,),
               Expanded(

@@ -1,4 +1,5 @@
 
+import 'package:app_loja_virtual/helpers/logger.dart';
 import 'package:app_loja_virtual/managers/user_manager.dart';
 import 'package:app_loja_virtual/models/cart_model.dart';
 import 'package:app_loja_virtual/models/product_model.dart';
@@ -26,7 +27,18 @@ class CartManager extends ChangeNotifier {
   Future<void> _loadCartItems() async {
     final QuerySnapshot cartSnap = await userModel.cartReference.get();
     items = cartSnap.docs.map((e) => CartModel.fromDocument(e)..addListener(_onItemUpdate) ).toList();
-
+    try {
+      for (CartModel i in items) {
+        if (i.productModel.uid.isEmpty) {
+          FirebaseFirestore.instance.doc('products/${i.productID}').get().then((
+              doc) {
+            i.productModel = ProductModel.fromDocument(doc);
+          });
+        }
+      }
+    } catch (e){
+      logger.e(e.toString());
+    }
   }
 
   void addToCart(ProductModel product){

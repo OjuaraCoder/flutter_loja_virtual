@@ -21,27 +21,30 @@ class AddTileWidget extends StatelessWidget {
       Navigator.of(context).pop();
     }
 
-    return AspectRatio(
-      aspectRatio: 1,
-      child: GestureDetector(
-        onTap: (){
-          if(Platform.isAndroid){
-            showModalBottomSheet(
-              context: context,
-              builder: (context) => ImageSourceSheet(onImageSelected: onImageSelected),
-            );
-          } else {
-            showCupertinoModalPopup(
-              context: context,
-              builder: (context) => ImageSourceSheet(onImageSelected: onImageSelected),
-            );
-          }
-        },
-        child: Container(
-          color: Colors.white.withAlpha(30),
-          child: const Icon(
-            Icons.add,
-            color: Colors.white,
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(16),
+      child: AspectRatio(
+        aspectRatio: 1,
+        child: GestureDetector(
+          onTap: (){
+            if(Platform.isAndroid){
+              showModalBottomSheet(
+                context: context,
+                builder: (context) => ImageSourceSheet(onImageSelected: onImageSelected),
+              );
+            } else {
+              showCupertinoModalPopup(
+                context: context,
+                builder: (context) => ImageSourceSheet(onImageSelected: onImageSelected),
+              );
+            }
+          },
+          child: Container(
+            color: Colors.white.withAlpha(30),
+            child: const Icon(
+              Icons.add,
+              color: Colors.white,
+            ),
           ),
         ),
       ),

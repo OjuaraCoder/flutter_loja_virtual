@@ -82,17 +82,20 @@ class ItemTile extends StatelessWidget {
                   });
             }
           : null,
-      child: AspectRatio(
-        aspectRatio: 1,
-        child: item.image is String
-            ? FadeInImage.memoryNetwork(
-                placeholder: kTransparentImage,
-                image: item.image as String,
-                fit: BoxFit.cover)
-            : Image.file(
-                item.image as File,
-                fit: BoxFit.cover,
-              ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(16.0),
+        child: AspectRatio(
+          aspectRatio: 1,
+          child: item.image is String
+              ? FadeInImage.memoryNetwork(
+                  placeholder: kTransparentImage,
+                  image: item.image as String,
+                  fit: BoxFit.cover)
+              : Image.file(
+                  item.image as File,
+                  fit: BoxFit.cover,
+                ),
+        ),
       ),
     );
   }

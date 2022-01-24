@@ -6,6 +6,8 @@ import 'package:flutter/cupertino.dart';
 
 class CartModel extends ChangeNotifier{
 
+  final FirebaseFirestore firestore = FirebaseFirestore.instance;
+
   ProductModel productModel;
   String uid;
   String productID;
@@ -27,51 +29,22 @@ class CartModel extends ChangeNotifier{
     , quantity = 0
     , size = product.selectedSize.name {
     increment();
- }
+  }
 
-  // CartModel.fromProduct(this.productModel){
-  //   productID = productModel.uid;
-  //   increment();
-  //   size = productModel.selectedSize.name;
-  // }
+  CartModel.fromDocument(DocumentSnapshot document)
+    : uid = document.id
+    , productID = document['pid']
+    , productModel = ProductModel.cleanProduct()
+    , quantity = document['quantity'] as int
+    , size = document['size'] as String;
 
-  // CartModel.fromDocument(DocumentSnapshot documentSnapshot){
-  //   productID = documentSnapshot['pid'] ?? '';
-  //   quantity = documentSnapshot['quantity'] as int;
-  //   size = documentSnapshot['size'] as String;
-  //
-  //   firestore.doc('products/$productID').get().then((doc){
-  //     productModel = ProductModel.fromDocument(doc);
-  //     notifyListeners();
-  //   });
 
-  // uid = documentSnapshot.id,
-  // productID = documentSnapshot['pid'],
-  // quantity = documentSnapshot['quantity'] as int,
-  //     size = documentSnapshot['size'] as String,
-  //     productModel = ProductManager().findProduct(productID)
-
-  // }
-
-  // CartModel.fromDocument(DocumentSnapshot document)
-  //   : uid = document.id
-  //   , productID = document['pid']
-  //   , productModel = ProductManager.findProduct(document['pid'])
-  //   , quantity = document['quantity'] as int
-  //   , size = document['size'] as String {
-  //   notifyListeners();
-  // }
-
-  factory CartModel.fromDocument(DocumentSnapshot document) {
-    var productModel = ProductModel.cleanProduct();
-    productModel.uid = document['pid'];
-    return CartModel (
-      productID: document['pid'],
-      productModel: productModel,
-      size: document['size'] as String,
-      quantity: document['quantity'] as int,
-      uid: document.id,
-    );
+  ProductModel getProductID(String productID){
+    var product = ProductModel.cleanProduct();
+    firestore.doc('products/$productID').get().then((doc){
+        productModel = ProductModel.fromDocument(doc);
+      });
+    return product;
   }
 
   ItemSizeModel get itemSize{

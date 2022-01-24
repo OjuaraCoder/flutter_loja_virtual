@@ -104,7 +104,7 @@ class LoginScreen extends StatelessWidget {
                                         SnackBar(
                                           content: Text('Falha ao entrar: $e'),
                                           backgroundColor: Colors.red,
-                                          duration: const Duration(milliseconds: 300),
+                                          duration: const Duration(seconds: 2),
                                         ),
                                       );
                                     },

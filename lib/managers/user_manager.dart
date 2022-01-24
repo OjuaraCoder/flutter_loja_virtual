@@ -31,11 +31,13 @@ class UserManager extends ChangeNotifier {
       UserCredential credential = await auth.signInWithEmailAndPassword(email: email, password: pass);
 
       final DocumentSnapshot docUser = await firestore.collection('users').doc(credential.user!.uid).get();
-      usermodel.cleanUser();
       usermodel = UserModel.fromDocument(docUser);
+      checkUserAdmin(credential.user!);
+      notifyListeners();
       onSuccess();
     } on FirebaseAuthException catch (e) {
       onFail(getErrorString(e.code));
+      logger.e('erro ao obter as credenciais');
       loading = false;
     }
     loading = false;
@@ -69,6 +71,13 @@ class UserManager extends ChangeNotifier {
     notifyListeners();
   }
 
+  void checkUserAdmin(User currentUser) async {
+    final docAdmin = await firestore.collection('admins').doc(currentUser.uid).get();
+    if(docAdmin.exists){
+      usermodel.admin = true;
+    }
+  }
+
   set loading(bool value) {
     _loading = value;
     notifyListeners();
@@ -80,10 +89,7 @@ class UserManager extends ChangeNotifier {
       final DocumentSnapshot docUser = await firestore.collection('users').doc(currentUser.uid).get();
       usermodel = UserModel.fromDocument(docUser);
 
-      final docAdmin = await firestore.collection('admins').doc(currentUser.uid).get();
-      if(docAdmin.exists){
-        usermodel.admin = true;
-      }
+      checkUserAdmin(currentUser);
 
       logger.d('usermodel: ${usermodel.name}');
       notifyListeners();

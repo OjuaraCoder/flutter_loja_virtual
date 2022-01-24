@@ -32,7 +32,7 @@ class SectionList extends StatelessWidget {
                 builder: (_, sectionModel, __){
                   return ListView.separated(
                     scrollDirection: Axis.horizontal,
-                    separatorBuilder: (_,__) => const SizedBox(width: 6,),
+                    separatorBuilder: (_,__) => const SizedBox(width: 10,),
                     itemCount: homeManager.editing
                         ? sectionModel.items.length + 1
                         : sectionModel.items.length,
