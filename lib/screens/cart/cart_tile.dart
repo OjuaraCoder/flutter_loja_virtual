@@ -74,11 +74,12 @@ class CartTile extends StatelessWidget {
                 builder: (_, cartModel, __) {
                   return Column(
                     children: [
-                      CurstomIconButton(
+                      CustomIconButton(
                         iconData: Icons.add,
                         color: Theme.of(context).primaryColor,
                         onTapButton: cartModel.increment,
                         isEnabled: true,
+                        size: 24,
                       ),
                       Text(
                         '${cartModel.quantity}',
@@ -86,11 +87,12 @@ class CartTile extends StatelessWidget {
                           fontSize: 20,
                         ),
                       ),
-                      CurstomIconButton(
+                      CustomIconButton(
                         iconData: Icons.remove,
                         color: cartModel.quantity > 1 ? Theme.of(context).primaryColor : Colors.red,
                         onTapButton: cartModel.decrement,
                         isEnabled: true,
+                        size: 24,
                       ),
                     ],
                   );

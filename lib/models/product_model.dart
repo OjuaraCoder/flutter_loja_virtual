@@ -133,7 +133,7 @@ class ProductModel  extends ChangeNotifier{
     }
 
     for(final image in images){
-      if(!newImages!.contains(image)){
+      if(!newImages!.contains(image) && image.contains('firebase')){
         try {
           final ref = storage.refFromURL(image);
           await ref.delete();

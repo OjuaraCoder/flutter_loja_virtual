@@ -1,11 +1,15 @@
 
 import 'package:app_loja_virtual/helpers/logger.dart';
 import 'package:app_loja_virtual/managers/user_manager.dart';
+import 'package:app_loja_virtual/models/address_model.dart';
 import 'package:app_loja_virtual/models/cart_model.dart';
 import 'package:app_loja_virtual/models/product_model.dart';
 import 'package:app_loja_virtual/models/user_model.dart';
+import 'package:app_loja_virtual/services/cepaberto_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:geolocator/geolocator.dart';
+
 
 class CartManager extends ChangeNotifier {
 
@@ -13,6 +17,7 @@ class CartManager extends ChangeNotifier {
 
   List<CartModel> items = [];
   late UserModel userModel;
+  AddressModel addressModel = AddressModel.clean();
   num produtsPrice = 0.0;
 
   void updateUser(UserManager userManager) {
@@ -93,5 +98,56 @@ class CartManager extends ChangeNotifier {
     }
     return true;
   }
+
+  void setAddress(AddressModel addressModel){
+    this.addressModel = addressModel;
+    calculateDelivery(addressModel.latitude, addressModel.longitude);
+  }
+
+  Future<void> getAddress(String cep) async {
+    final cepAbertoService = CepAbertoService();
+    try{
+      final cepAbertoAddress = await cepAbertoService.getAddressFromCep(cep);
+      if(cepAbertoAddress.cep.isNotEmpty){
+        addressModel = AddressModel(
+          street: cepAbertoAddress.logradouro,
+          district: cepAbertoAddress.bairro,
+          zipCode: cepAbertoAddress.cep,
+          city: cepAbertoAddress.cidade.nome,
+          state: cepAbertoAddress.estado.sigla,
+          latitude: cepAbertoAddress.latitude,
+          longitude: cepAbertoAddress.longitude,
+          number: '',
+          complement: '',
+        );
+        notifyListeners();
+      }
+    } catch (e){
+      logger.e(e.toString());
+    }
+  }
+
+  void setCleanAddress(){
+    addressModel = AddressModel.clean();
+    notifyListeners();
+  }
+
+  Future<void> calculateDelivery(double latitude, double longitude) async {
+    // final DocumentSnapshot doc = await firestore.doc('aux/delivery').get();
+    //
+    // final latStore = doc['latitude'] as double;
+    // final longStore = doc['longitude'] as double;
+    // final maxkm = doc['maxkm'] as num;
+    //
+    // double dist = Geolocator.distanceBetween(latStore, longStore, latitude, longitude);
+    //
+    // dist /= 1000.0;
+    // logger.d(dist.toString());
+    // if(dist <= maxkm){
+    //
+    // }
+
+  }
+
 }
 

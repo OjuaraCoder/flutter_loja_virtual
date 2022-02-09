@@ -1,8 +1,8 @@
-import 'package:app_loja_virtual/components/carousel_component.dart';
 import 'package:app_loja_virtual/components/size_widget.dart';
 import 'package:app_loja_virtual/managers/cart_manager.dart';
 import 'package:app_loja_virtual/managers/user_manager.dart';
 import 'package:app_loja_virtual/models/product_model.dart';
+import 'package:carousel_pro_nullsafety/carousel_pro_nullsafety.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -46,7 +46,21 @@ class ProductScreen extends StatelessWidget {
         backgroundColor: Colors.white,
         body: ListView(
           children: [
-            CarouselComponent(listImages: productModel.images,),
+            AspectRatio(
+              aspectRatio: 1.5,
+              child: Carousel(
+                images: productModel.images.map((url){
+                  return Image.network(
+                    url, fit: BoxFit.cover,
+                  );
+                }).toList(),
+                dotSize: 4,
+                dotSpacing: 15,
+                dotBgColor: Colors.transparent,
+                dotColor: primaryColor,
+                autoplay: false,
+              ),
+            ),
             Padding(
               padding: const EdgeInsets.all(16),
               child: Column(

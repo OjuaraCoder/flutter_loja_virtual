@@ -5,12 +5,27 @@ import 'package:app_loja_virtual/screens/admin_users/admin_users_screen.dart';
 import 'package:app_loja_virtual/screens/home/home_screen.dart';
 import 'package:app_loja_virtual/screens/products/products_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
-class BaseScreen extends StatelessWidget {
+class BaseScreen extends StatefulWidget {
+
+  const BaseScreen({Key? key}) : super(key: key);
+
+  @override
+  State<BaseScreen> createState() => _BaseScreenState();
+}
+
+class _BaseScreenState extends State<BaseScreen> {
   final PageController pageController = PageController();
 
-  BaseScreen({Key? key}) : super(key: key);
+  @override
+  void initState() {
+    super.initState();
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp
+    ]);
+  }
 
   @override
   Widget build(BuildContext context) {

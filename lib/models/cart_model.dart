@@ -1,4 +1,3 @@
-import 'package:app_loja_virtual/managers/product_manager.dart';
 import 'package:app_loja_virtual/models/item_size_model.dart';
 import 'package:app_loja_virtual/models/product_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';

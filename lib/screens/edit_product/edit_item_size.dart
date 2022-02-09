@@ -92,25 +92,28 @@ class EditItemSize extends StatelessWidget {
         ),
         const SizedBox(width: 4,),
 
-        CurstomIconButton(
+        CustomIconButton(
           iconData: Icons.arrow_drop_up,
           color: Colors.black,
           onTapButton: onMoveUp,
           isEnabled: isMoveUpEnabled,
+          size: 24,
         ),
         const SizedBox(width: 4,),
-        CurstomIconButton(
+        CustomIconButton(
           iconData: Icons.arrow_drop_down,
           color: Colors.black,
           onTapButton: onMoveDown,
           isEnabled: isMoveDownEnabled,
+          size: 24,
         ),
         const SizedBox(width: 4,),
-        CurstomIconButton(
+        CustomIconButton(
           iconData: Icons.delete,
           color: Colors.red,
           onTapButton: onRemove,
           isEnabled: true,
+          size: 24,
         ),
       ],
     );

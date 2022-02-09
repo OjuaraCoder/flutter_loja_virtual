@@ -37,13 +37,14 @@ class SectionHeader extends StatelessWidget {
                   onChanged: (text) => section.name = text,
                 ),
               ),
-              CurstomIconButton(
+              CustomIconButton(
                 iconData: Icons.delete,
                 color: Colors.white,
                 isEnabled: true,
                 onTapButton: (){
                   homeManager.removeSection(section);
                 },
+                size: 24,
               ),
             ],
           ),

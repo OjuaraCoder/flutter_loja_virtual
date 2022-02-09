@@ -4,8 +4,8 @@ import 'package:app_loja_virtual/managers/product_manager.dart';
 import 'package:app_loja_virtual/models/product_model.dart';
 import 'package:app_loja_virtual/models/section_item.dart';
 import 'package:app_loja_virtual/models/section_model.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:transparent_image/transparent_image.dart';
 import 'package:provider/provider.dart';
 
 class ItemTile extends StatelessWidget {
@@ -20,7 +20,7 @@ class ItemTile extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         final product = context.read<ProductManager>().findProductByID(item.uidProduct);
-        if(product.uid != ''){
+        if(product.uid.isNotEmpty){
           Navigator.of(context).pushNamed('/product', arguments: product);
         }
       },
@@ -87,10 +87,17 @@ class ItemTile extends StatelessWidget {
         child: AspectRatio(
           aspectRatio: 1,
           child: item.image is String
-              ? FadeInImage.memoryNetwork(
-                  placeholder: kTransparentImage,
-                  image: item.image as String,
-                  fit: BoxFit.cover)
+              ? CachedNetworkImage(
+                  imageUrl: item.image,
+                  fit: BoxFit.cover,
+                  placeholder: (context, url) => Container(
+                    alignment: Alignment.center,
+                    child: const CircularProgressIndicator(),
+                  ),
+                  errorWidget: (context, url, error) => const Icon(Icons.error, size: 50, color: Colors.red,),
+                   fadeOutDuration: const Duration(seconds: 1),
+                   fadeInDuration: const Duration(seconds: 3),
+                )
               : Image.file(
                   item.image as File,
                   fit: BoxFit.cover,

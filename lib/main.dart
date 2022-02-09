@@ -2,6 +2,7 @@ import 'package:app_loja_virtual/managers/admin_users_manager.dart';
 import 'package:app_loja_virtual/managers/product_manager.dart';
 import 'package:app_loja_virtual/models/product_model.dart';
 import 'package:app_loja_virtual/managers/user_manager.dart';
+import 'package:app_loja_virtual/screens/address/address_screen.dart';
 import 'package:app_loja_virtual/screens/base/bases_creen.dart';
 import 'package:app_loja_virtual/screens/cart/cart_screen.dart';
 import 'package:app_loja_virtual/screens/edit_product/edit_product_screen.dart';
@@ -9,6 +10,7 @@ import 'package:app_loja_virtual/screens/login/loginscreen.dart';
 import 'package:app_loja_virtual/screens/productdetail/product_screen.dart';
 import 'package:app_loja_virtual/screens/select_product/selecte_product_screen.dart';
 import 'package:app_loja_virtual/screens/signup/signup_screen.dart';
+import 'package:app_loja_virtual/services/cepaberto_service.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -71,7 +73,6 @@ class MyApp extends StatelessWidget {
           ),
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
-        initialRoute: '/base',
         onGenerateRoute: (settings){
           switch(settings.name){
             case '/login':
@@ -82,6 +83,8 @@ class MyApp extends StatelessWidget {
               return MaterialPageRoute(builder: (_) => ProductScreen(settings.arguments as ProductModel));
             case '/cart':
               return MaterialPageRoute(builder: (_) => const CartScreen());
+            case '/address':
+              return MaterialPageRoute(builder: (_) => const AddressScreen());
             case '/select_product':
               return MaterialPageRoute(builder: (_) => const SelectProductScreen());
             case '/edit_product':

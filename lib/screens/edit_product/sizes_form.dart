@@ -35,7 +35,7 @@ class SizesForm extends StatelessWidget {
                     ),
                   ),
                 ),
-                CurstomIconButton(
+                CustomIconButton(
                   iconData: Icons.add,
                   color: Colors.black,
                   isEnabled: true,
@@ -43,6 +43,7 @@ class SizesForm extends StatelessWidget {
                     state.value!.add(ItemSizeModel(name: '', price: 0.00, stock: 0));
                     state.didChange(state.value);
                   },
+                  size: 24,
                 ),
               ],
             ),
